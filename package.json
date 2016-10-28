@@ -1,7 +1,7 @@
 {
-  "name": "vuejs",
+  "name": "Contas a pagar",
   "version": "0.0.1",
-  "description": "Text com vuee js",
+  "description": "Contas a pagar com VueJs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

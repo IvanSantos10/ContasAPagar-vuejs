@@ -16,7 +16,7 @@ Vue.filter('status', function (value) {
     }else {
         return "Existem "+value+" contas a serem pagas"
     }
-})
+});
 
 var app = new Vue({
     el: '#app',
