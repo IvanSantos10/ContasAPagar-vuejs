@@ -7,14 +7,14 @@ Vue.filter('doneLabel', function (value) {
 
 });
 
-Vue.filter('status', function (value) {
+Vue.filter('statusGeneral', function (value) {
     if(value === false){
         return "Nenhuma conta cadastrada";
     }
     if(!value){
         return "Nenhuma conta a pagar"
     }else {
-        return "Existem "+value+" contas a serem pagas"
+        return "Existem "+ value +" contas a serem pagas"
     }
 });
 
@@ -98,8 +98,7 @@ var app = new Vue({
         deleteBill: function (bill) {
 
             if(confirm("Você deseja mesmo excluir?")){
-                //$delete(bill);
-                this.bills.splice(bill,1)
+                this.bills.$remove(bill)
             }
         }
     }
