@@ -40,12 +40,12 @@ var menuComponent = Vue.extend({
             if (id == 1) {
                 this.$parent.formType = 'insert';
             }
-            ;
         },
     }
 });
 Vue.component('menu-component', menuComponent);
-var appComponent = Vue.extend({
+
+var billListComponent = Vue.extend({
     template: `
     <style>
         .pago{
@@ -54,85 +54,40 @@ var appComponent = Vue.extend({
         .nao-pago{
             color: red;
         }
-        .red{
-            color: red;
-        }
-        .green{
-            color: green;
-        }
-        .gray{
-            color: gray;
-        }
         .minha-class{
             background-color: burlywood;
         }
     </style>
-    <h1>{{ title }}</h1>
-    <h3 :class="{'gray': status === false , 'green': status == 0, 'red': status > 0}">{{ status | statusGeneral}}</h3>
-    <menu-component></menu-component>
-    <div v-if="activedView == 0">
-        <table border="1" cellpadding="10">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Vencimento</th>
-                <th>Nome</th>
-                <th>Valor</th>
-                <th>Paga?</th>
-                <th>Ações</th>
+    <table border="1" cellpadding="10">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Vencimento</th>
+            <th>Nome</th>
+            <th>Valor</th>
+            <th>Paga?</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tdody>
+            <tr v-for="(index,o) in bills">
+                <td>{{ index + 1}}</td>
+                <td>{{ o.date_due }}</td>
+                <td>{{ o.name }}</td>
+                <td>{{ o.value | currency "R$ " }}</td>
+                <td class="minha-class" :class="{ 'pago': o.done, 'nao-pago': !o.done}">
+                    {{ o.done | doneLabel }}
+                </td>
+                <td>
+                    <a href="#" @click.prevent="loadBill(o)">Editar</a>
+                    <a href="#" @click.prevent="deleteBill(o)">Excluir</a>
+                </td>
             </tr>
-            </thead>
-            <tdody>
-                <tr v-for="(index,o) in bills">
-                    <td>{{ index + 1}}</td>
-                    <td>{{ o.date_due }}</td>
-                    <td>{{ o.name }}</td>
-                    <td>{{ o.value | currency "R$ " }}</td>
-                    <td class="minha-class" :class="{ 'pago': o.done, 'nao-pago': !o.done}">
-                        {{ o.done | doneLabel }}
-                    </td>
-                    <td>
-                        <a href="#" @click.prevent="loadBill(o)">Editar</a>
-                        <a href="#" @click.prevent="deleteBill(o)">Excluir</a>
-                    </td>
-                </tr>
-            </tdody>
-        </table>
-    </div>
-    <div v-if="activedView == 1">
-        <form name="form" @submit.prevent="submit">
-            <label>Vencimento:</label>
-            <input type="text" v-model="bill.date_due">
-            <br><br>
-            <label>Nome:</label>
-            <select v-model="bill.name">
-                <option v-for="o in names" :value="o" >{{ o }}</option>
-            </select>
-            <br><br>
-            <label>Valor:</label>
-            <input type="text" v-model="bill.value">
-            <br><br>
-            <label>Paga?:</label>
-            <input type="checkbox" v-model="bill.done">
-            <br><br>
-            <input type="submit" value="Enviar">
-            <br><br>
-        </form>
-    </div>
+        </tdody>
+    </table>
     `,
     data: function () {
         return {
-            test: '',
-            title: 'Contas a pagar',
-
-            activedView: 0,
-            formType: 'insert',
-            bill: {
-                date_due: '',
-                name: '',
-                value: 0,
-                done: false
-            },
             bills: [
                 {date_due: '20/10/2016', name: 'Conta de luz', value: 25.65, done: true},
                 {date_due: '21/10/2016', name: 'Conta de agua', value: 24.15, done: false},
@@ -141,7 +96,50 @@ var appComponent = Vue.extend({
                 {date_due: '23/10/2016', name: 'Conta de condominio', value: 22.50, done: false},
                 {date_due: '24/10/2016', name: 'Conta de Cartao', value: 120.60, done: false},
                 {date_due: '25/10/2016', name: 'Conta de Supemercado', value: 100.54, done: false}
-            ],
+            ]
+        };
+    },
+    methods: {
+        loadBill: function (bill) {
+            this.$parent.bill = bill;
+            this.$parent.activedView = 1;
+            this.$parent.formType = 'update';
+        },
+        deleteBill: function (bill) {
+
+            if (confirm("Você deseja mesmo excluir?")) {
+                this.bills.$remove(bill)
+            }
+        }
+    }
+});
+
+Vue.component('bill-list-component', billListComponent);
+
+var billCreateComponent = Vue.extend({
+    template: `
+    <form name="form" @submit.prevent="submit">
+        <label>Vencimento:</label>
+        <input type="text" v-model="bill.date_due">
+        <br><br>
+        <label>Nome:</label>
+        <select v-model="bill.name">
+            <option v-for="o in names" :value="o" >{{ o }}</option>
+        </select>
+        <br><br>
+        <label>Valor:</label>
+        <input type="text" v-model="bill.value">
+        <br><br>
+        <label>Paga?:</label>
+        <input type="checkbox" v-model="bill.done">
+        <br><br>
+        <input type="submit" value="Enviar">
+        <br><br>
+    </form>
+    `,
+    props: ['bill', 'formType'],
+    data: function () {
+        return {
             names: [
                 'Conta de luz',
                 'Conta de agua',
@@ -151,6 +149,62 @@ var appComponent = Vue.extend({
                 'Conta de Cartao',
                 'Conta de Supemercado'
             ]
+        };
+    },
+    methods: {
+        submit: function () {
+            if (this.formType == 'insert') {
+                this.bills.push(this.bill);
+            }
+
+            this.bill = {
+                date_due: '',
+                name: '',
+                value: 0,
+                done: false
+            };
+
+            this.activedView = 0;
+        }
+    }
+
+});
+
+Vue.component('bill-create-component', billCreateComponent);
+var appComponent = Vue.extend({
+    template: `
+    <style>
+        .red{
+            color: red;
+        }
+        .green{
+            color: green;
+        }
+        .gray{
+            color: gray;
+        }
+    </style>
+    <h1>{{ title }}</h1>
+    <h3 :class="{'gray': status === false , 'green': status == 0, 'red': status > 0}">{{ status | statusGeneral}}</h3>
+    <menu-component></menu-component>
+    <div v-if="activedView == 0">
+        <bill-list-component></bill-list-component>
+    </div>
+    <div v-if="activedView == 1">
+        <bill-create-component :bill="bill" :form-type="formType"></bill-create-component>
+    </div>
+    `,
+    data: function () {
+        return {
+            title: 'Contas a pagar',
+            activedView: 0,
+            formType: 'insert',
+            bill: {
+                date_due: '',
+                name: '',
+                value: 0,
+                done: false
+            }
         };
 
     },
@@ -171,32 +225,6 @@ var appComponent = Vue.extend({
     },
     methods: {
 
-        submit: function () {
-            if (this.formType == 'insert') {
-                this.bills.push(this.bill);
-            }
-
-            this.bill = {
-                date_due: '',
-                name: '',
-                value: 0,
-                done: false
-            };
-
-            this.activedView = 0;
-        },
-        loadBill: function (bill) {
-            this.bill = bill;
-            this.activedView = 1;
-
-            this.formType = 'update';
-        },
-        deleteBill: function (bill) {
-
-            if (confirm("Você deseja mesmo excluir?")) {
-                this.bills.$remove(bill)
-            }
-        }
     }
 
 });
