@@ -189,10 +189,10 @@ var appComponent = Vue.extend({
     <h3 :class="{'gray': status === false , 'green': status == 0, 'red': status > 0}">{{ status | statusGeneral}}</h3>
     <menu-component></menu-component>
     <div v-show="activedView == 0">
-        <bill-list-component></bill-list-component>
+        <bill-list-component></bill-26- Conectando lista de contas com cadastro de uma conta-2016-10-28_20.21.55list-component>
     </div>
     <div v-show="activedView == 1">
-        <bill-create-component :bill="bill" :form-type="formType"></bill-create-component>
+        <bill-create-component :bill.sync="bill" :form-type="formType"></bill-create-component>
     </div>
     `,
     data: function () {
