@@ -36,9 +36,9 @@ var menuComponent = Vue.extend({
     },
     methods: {
         showView: function (id) {
-            this.$parent.activedView = id;
+	    this.$dispatch('change-activedview', id);
             if (id == 1) {
-                this.$parent.formType = 'insert';
+                this.$dispatch('change-formtype', 'insert');
             }
         },
     }
@@ -101,8 +101,8 @@ var billListComponent = Vue.extend({
     methods: {
         loadBill: function (bill) {
             this.$parent.bill = bill;
-            this.$parent.activedView = 1;
-            this.$parent.formType = 'update';
+            this.$dispatch('change-activedview', 1);
+	    this.$dispatch('change-formtype', 'update');
         },
         deleteBill: function (bill) {
 
@@ -134,9 +134,10 @@ var billCreateComponent = Vue.extend({
         <br><br>
     </form>
     `,
-    props: ['bill', 'formType'],
+    props: ['bill'],
     data: function () {
         return {
+            formType: 'insert',
             names: [
                 'Conta de luz',
                 'Conta de agua',
@@ -163,8 +164,12 @@ var billCreateComponent = Vue.extend({
 
             this.$parent.activedView = 0;
         }
+    },
+    events: {
+	'change-formtype': function(formType){
+	    this.formType = formType;
+	}
     }
-
 });
 
 var appComponent = Vue.extend({
@@ -192,14 +197,13 @@ var appComponent = Vue.extend({
         <bill-list-component v-ref:bill-list-component></bill-list-component>
     </div>
     <div v-show="activedView == 1">
-        <bill-create-component :bill.sync="bill" :form-type="formType"></bill-create-component>
+        <bill-create-component :bill.sync="bill"></bill-create-component>
     </div>
     `,
     data: function () {
         return {
             title: 'Contas a pagar',
             activedView: 0,
-            formType: 'insert',
             bill: {
                 date_due: '',
                 name: '',
@@ -225,7 +229,15 @@ var appComponent = Vue.extend({
             return count;
         }
     },
-    methods: {}
+    methods: {},
+    events: {
+	'change-activedview': function(activedView){
+	    this.activedView = activedView;
+	},
+	'change-formtype': function(formType){
+	    this.$broadcast('change-formtype', formType);
+	}
+    }
 
 });
 
