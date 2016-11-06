@@ -151,7 +151,7 @@ var billCreateComponent = Vue.extend({
     methods: {
         submit: function () {
             if (this.formType == 'insert') {
-                this.$parent.$children[1].bills.push(this.bill);
+                this.$parent.$refs.billListComponent.bills.push(this.bill);
             }
 
             this.bill = {
@@ -189,7 +189,7 @@ var appComponent = Vue.extend({
     <h3 :class="{'gray': status === false , 'green': status == 0, 'red': status > 0}">{{ status | statusGeneral}}</h3>
     <menu-component></menu-component>
     <div v-show="activedView == 0">
-        <bill-list-component></bill-26- Conectando lista de contas com cadastro de uma conta-2016-10-28_20.21.55list-component>
+        <bill-list-component v-ref:bill-list-component></bill-list-component>
     </div>
     <div v-show="activedView == 1">
         <bill-create-component :bill.sync="bill" :form-type="formType"></bill-create-component>
@@ -211,13 +211,14 @@ var appComponent = Vue.extend({
     },
     computed: {
         status: function () {
-            if (!this.bills.length) {
+	    var billListComponent = this.$refs.billListComponent;
+            if (!billListComponent.bills.length) {
                 return false;
             }
 
             var count = 0;
-            for (var i in this.bills) {
-                if (!this.bills[i].done) {
+            for (var i in billListComponent.bills) {
+                if (!billListComponent.bills[i].done) {
                     count++;
                 }
             }
