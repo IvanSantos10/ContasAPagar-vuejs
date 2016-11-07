@@ -15,12 +15,5 @@ window.menuComponent = Vue.extend({
                 {id: 1, name: 'Criar contas', routeName: 'bill.create'}
             ],
         };
-    },
-    methods: {
-        showView: function (id) {
-            if (id == 1) {
-                this.$dispatch('change-formtype', 'insert');
-            }
-        },
     }
 });
