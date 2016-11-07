@@ -52,8 +52,6 @@ window.billCreateComponent = Vue.extend({
                 value: 0,
                 done: false
             };
-
-            this.$dispatch('change-activedview', 0);
         }
     },
     events: {
