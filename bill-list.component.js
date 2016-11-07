@@ -32,7 +32,7 @@ window.billListComponent = Vue.extend({
                     {{ o.done | doneLabel }}
                 </td>
                 <td>
-                    <a href="#" @click.prevent="loadBill(o)">Editar</a>
+                    <a v-link="{ name: 'bill.update', params: { index: index}}">Editar</a>
                     <a href="#" @click.prevent="deleteBill(o)">Excluir</a>
                 </td>
             </tr>
@@ -45,12 +45,9 @@ window.billListComponent = Vue.extend({
         };
     },
     methods: {
-        loadBill: function (bill) {
-            this.$dispatch('change-bill', bill);
-        },
         deleteBill: function (bill) {
             if (confirm("Você deseja mesmo excluir?")) {
-                this.bills.$remove(bill)
+                this.$root.$children[0].bills.$remove(bill)
             }
         }
     }
