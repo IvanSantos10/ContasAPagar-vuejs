@@ -2,12 +2,12 @@ var router = new VueRouter();
 
 var mainComponent = Vue.extend({
     components: {
-        'app-component': appComponent
+        'bill-component': billComponent
     },
-    template: '<app-component></app-component>',
+    template: '<bill-component></bill-component>',
     data: function () {
         return {
-            bills: [
+            billsPay: [
                 {date_due: '20/10/2016', name: 'Conta de luz', value: 25.65, done: true},
                 {date_due: '21/10/2016', name: 'Conta de agua', value: 24.15, done: false},
                 {date_due: '22/10/2016', name: 'Conta de telefone', value: 21.54, done: false},
@@ -20,21 +20,29 @@ var mainComponent = Vue.extend({
     }
 });
 router.map({
-    'bills': {
-        name: 'bill.list',
-        component: billListComponent
+    'bill-pays': {
+        component: billPayComponent,
+        subRoutes: {
+            '/': {
+                name: 'bill.list',
+                component: billPayListComponent
+            },
+            '/create': {
+                name: 'bill.create',
+                component: billPayCreateComponent
+            },
+            '/:index/update': {
+                name: 'bill.update',
+                component: billPayCreateComponent
+            }
+        }
     },
-    'bill/create': {
-        name: 'bill.create',
-        component: billCreateComponent
-    },
-    'bill/:index/update': {
-        name: 'bill.update',
-        component: billCreateComponent
-    },
+    /*
+
     '*': {
-        component: billListComponent
+        component: billPayListComponent
     }
+    */
 });
 
 router.start({
@@ -43,9 +51,10 @@ router.start({
     }
 }, "#app");
 
+/*
 router.redirect({
     '*': '/bills'
 });
-
+*/
 
 

@@ -1,4 +1,4 @@
-window.billCreateComponent = Vue.extend({
+window.billPayCreateComponent = Vue.extend({
     template: `
     <form name="form" @submit.prevent="submit">
         <label>Vencimento:</label>
@@ -41,15 +41,15 @@ window.billCreateComponent = Vue.extend({
         };
     },
     created: function () {
-        if (this.$route.name === 'bill.update') {
-            this.formType = 'update';
+        if (this.$route.name == 'bill.update'){
             this.getBill(this.$route.params.index);
+	    this.formType = 'update';
         }
     },
     methods: {
         submit: function () {
             if (this.formType == 'insert') {
-                bills: this.$root.$children[0].bills.push(this.bill);
+                bills: this.$root.$children[0].billsPay.push(this.bill);
             }
 
             this.bill = {
@@ -61,7 +61,7 @@ window.billCreateComponent = Vue.extend({
             this.$router.go({name: 'bill.list'});
         },
         getBill: function (index) {
-            this.bill = this.$root.$children[0].bills[index];
+            this.bill = this.$root.$children[0].billsPay[index];
 
         }
     }
