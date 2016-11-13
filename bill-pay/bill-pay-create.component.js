@@ -19,6 +19,9 @@ window.billPayCreateComponent = Vue.extend({
         <br><br>
     </form>
     `,
+    http: {
+        root: 'http://localhost:8080/api'
+    },
     props: ['bill'],
     data: function () {
         return {
@@ -43,26 +46,27 @@ window.billPayCreateComponent = Vue.extend({
     created: function () {
         if (this.$route.name == 'bill-pay.update'){
             this.formType = 'update';
-            this.getBill(this.$route.params.index);
+            this.getBill(this.$route.params.id);
         }
     },
     methods: {
         submit: function () {
             if (this.formType == 'insert') {
-                bills: this.$root.$children[0].billsPay.push(this.bill);
+                this.$http.post('bills', this.bill).then(function (response) {
+                    this.$dispatch('change-status');
+                    this.$router.go({name: 'bill-pay.list'});
+                })
+            }else{
+                this.$http.put('bills/'+this.bill.id, this.bill).then(function (response) {
+                    this.$dispatch('change-status');
+                    this.$router.go({name: 'bill-pay.list'});
+                })
             }
-
-            this.bill = {
-                date_due: '',
-                name: '',
-                value: 0,
-                done: false
-            };
-            this.$router.go({name: 'bill-pay.list'});
         },
-        getBill: function (index) {
-            this.bill = this.$root.$children[0].billsPay[index];
-
+        getBill: function (id) {
+            this.$http.get('bills/'+id).then(function (response) {
+                this.bill = response.data
+            });
         }
     }
 });

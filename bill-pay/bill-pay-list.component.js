@@ -32,22 +32,33 @@ window.billPayListComponent = Vue.extend({
                     {{ o.done | doneLabelPay }}
                 </td>
                 <td>
-                    <a v-link="{ name: 'bill-pay.update', params: { index: index}}">Editar</a>
+                    <a v-link="{ name: 'bill-pay.update', params: { id: o.id}}">Editar</a>
                     <a href="#" @click.prevent="deleteBill(o)">Excluir</a>
                 </td>
             </tr>
         </tdody>
     </table>
     `,
+    http: {
+        root: 'http://localhost:8080/api'
+    },
     data: function () {
         return {
-            bills: this.$root.$children[0].billsPay,
+            bills: []
         };
+    },
+    created: function () {
+        this.$http.get('bills').then(function (response) {
+            this.bills = response.data
+        })
     },
     methods: {
         deleteBill: function (bill) {
             if (confirm("Você deseja mesmo excluir?")) {
-                this.$root.$children[0].billsPay.$remove(bill)
+                this.$http.delete('bills/' + bill.id).then(function (response) {
+                    this.bills.$remove(bill);
+                    this.$dispatch('change-status');
+                });
             }
         }
     }

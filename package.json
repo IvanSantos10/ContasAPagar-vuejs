@@ -1,5 +1,5 @@
 {
-  "name": "Contas a pagar",
+  "name": "Contas_pagar_receber",
   "version": "0.0.1",
   "description": "Contas a pagar com VueJs",
   "main": "index.js",
