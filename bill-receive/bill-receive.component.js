@@ -1,9 +1,9 @@
 window.billReceiveComponent = Vue.extend({
-    /*components: {
-        'menu-component': billPayMenuComponent
-    },*/
+    components: {
+        'menu-component': billReceiveMenuComponent
+    },
     template: `
-   <!---- <style>
+    <style>
         .red{
             color: red;
         }
@@ -13,11 +13,11 @@ window.billReceiveComponent = Vue.extend({
         .gray{
             color: gray;
         }
-    </style>---->
+    </style>
     <h1>{{ title }}</h1>
-    <!--<h3 :class="{'gray': status === false , 'green': status == 0, 'red': status > 0}">{{ status | statusGeneral}}</h3>
+    <h3 :class="{'gray': status === false , 'green': status == 0, 'red': status > 0}">{{ status | statusGeneralReceive }}</h3>
     <menu-component></menu-component>
-    <router-view></router-view>-->
+    <router-view></router-view>
     `,
     data: function () {
         return {
@@ -25,9 +25,9 @@ window.billReceiveComponent = Vue.extend({
         };
 
     },
-    /*computed: {
+    computed: {
         status: function () {
-            var bills = this.$root.$children[0].billsPay;
+            var bills = this.$root.$children[0].billsReceive;
             if (!bills.length) {
                 return false;
             }
@@ -40,5 +40,5 @@ window.billReceiveComponent = Vue.extend({
             }
             return count;
         }
-    }*/
+    }
 });
