@@ -48,14 +48,16 @@ window.billPayListComponent = Vue.extend({
         };
     },
     created: function () {
-        this.$http.get('bills').then(function (response) {
+        var resource = this.$resource('bills{/id}');
+        resource.query().then(function (response) {
             this.bills = response.data
-        })
+        });
     },
     methods: {
         deleteBill: function (bill) {
             if (confirm("Você deseja mesmo excluir?")) {
-                this.$http.delete('bills/' + bill.id).then(function (response) {
+                var resource = this.$resource('bills{/id}');
+                resource.delete({id: bill.id}).then(function (response) {
                     this.bills.$remove(bill);
                     this.$dispatch('change-status');
                 });
