@@ -10,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "vue": "^1.0.26",
-    "vue-resource": "^1.0.3",
-    "vue-router": "^2.0.1"
+    "vue-router": "^0.7.13"
   }
 }
