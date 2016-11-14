@@ -1,7 +1,7 @@
 {
   "name": "Contas_pagar_receber",
   "version": "0.0.1",
-  "description": "Contas a pagar com VueJs",
+  "description": "Api de Contas a pagar e receber com VueJs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,6 +9,8 @@
   "author": "Ivan Santos",
   "license": "ISC",
   "dependencies": {
-    "vue": "^1.0.26"
+    "vue": "^1.0.26",
+    "vue-resource": "^1.0.3",
+    "vue-router": "^0.7.13"
   }
 }
