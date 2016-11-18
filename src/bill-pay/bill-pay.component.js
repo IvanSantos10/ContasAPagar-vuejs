@@ -38,8 +38,8 @@ window.billPayComponent = Vue.extend({
                 this.stauts = false;
             }
 
-            var count = 0;
-            for (var i in bills) {
+            let count = 0;
+            for (let i in bills) {
                 if (!bills[i].done) {
                     count++;
                 }
@@ -47,13 +47,13 @@ window.billPayComponent = Vue.extend({
             this.status = count;
         },
         updateStatus: function () {
-            var self = this;
+            let self = this;
             Bill_pay.query().then(function (response) {
                 self.calculateStatus(response.data)
             });
         },
         updateTotal: function () {
-            var self = this;
+            let self = this;
             Bill_pay.total().then(function (response) {
                 self.total = response.data.total;
             });

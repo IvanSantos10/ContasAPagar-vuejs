@@ -1,4 +1,4 @@
-var router = new VueRouter();
+let router = new VueRouter();
 
 router.map({
     '/': {
