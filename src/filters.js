@@ -1,20 +1,8 @@
-Vue.filter('doneLabelPay', function (value) {
-    if (value == 0) {
-        return 'Não paga';
-    }
-    return 'Paga';
+Vue.filter('doneLabelPay', (value) => value == 0 ? "Não paga" : "Paga");
 
-});
+Vue.filter('doneLabelReceive', (value) => value == 0 ? "Não paga" : "Paga");
 
-Vue.filter('doneLabelReceive', function (value) {
-    if (value == 0) {
-        return 'Não paga';
-    }
-    return 'Paga';
-
-});
-
-Vue.filter('statusGeneralPay', function (value) {
+Vue.filter('statusGeneralPay', (value) => {
     if (value === false) {
         return "Nenhuma conta cadastrada";
     }
@@ -25,7 +13,7 @@ Vue.filter('statusGeneralPay', function (value) {
     }
 });
 
-Vue.filter('statusGeneralReceive', function (value) {
+Vue.filter('statusGeneralReceive', (value) => {
     if (value === false) {
         return "Nenhuma conta cadastrada";
     }

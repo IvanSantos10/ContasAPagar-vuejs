@@ -18,7 +18,7 @@ window.billReceiveCreateComponent = Vue.extend({
     </form>
     `,
     props: ['bill'],
-    data: function () {
+    data() {
         return {
             formType: 'insert',
             bill: {
@@ -29,14 +29,14 @@ window.billReceiveCreateComponent = Vue.extend({
             }
         };
     },
-    created: function () {
+    created() {
         if (this.$route.name == 'bill-receive.update') {
             this.formType = 'update';
             this.getBill(this.$route.params.id);
         }
     },
     methods: {
-        submit: function () {
+        submit() {
             if (this.formType == 'insert') {
                 bills: this.$root.$children[0].billsReceive.push(this.bill);
             }
@@ -49,28 +49,26 @@ window.billReceiveCreateComponent = Vue.extend({
             };
             this.$router.go({name: 'bill-receive.list'});
         },
-        getBill: function (index) {
+        getBill(index) {
             this.bill = this.$root.$children[0].billsReceive[index];
 
         },
-        submit: function () {
-            let self = this;
+        submit() {
             if (this.formType == 'insert') {
-                Bill_receive.save({}, this.bill).then(function (response) {
-                    self.$dispatch('change-info');
-                    self.$router.go({name: 'bill-receive.list'});
+                Bill_receive.save({}, this.bill).then((response) => {
+                    this.$dispatch('change-info');
+                    this.$router.go({name: 'bill-receive.list'});
                 })
             } else {
-                Bill_receive.update({id: this.bill.id}, this.bill).then(function (response) {
-                    self.$dispatch('change-info');
-                    self.$router.go({name: 'bill-receive.list'});
+                Bill_receive.update({id: this.bill.id}, this.bill).then((response) => {
+                    this.$dispatch('change-info');
+                    this.$router.go({name: 'bill-receive.list'});
                 })
             }
         },
-        getBill: function (id) {
-            let self = this;
-            Bill_receive.get({id: id}).then(function (response) {
-                self.bill = response.data
+        getBill(id) {
+            Bill_receive.get({id: id}).then((response) => {
+                this.bill = response.data
             });
         }
     }

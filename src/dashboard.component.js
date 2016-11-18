@@ -7,21 +7,21 @@ window.dashboardComponent = Vue.extend({
     <p> {{ billReceive | currency "R$ " }}</p>
     <router-view></router-view>
     `,
-    data: function () {
+    data() {
         return {
             title: "Dashboard",
             billPay: 0,
             billReceive: 0
         }
     },
-    created: function () {
+    created() {
         let self = this;
-        Bill_pay.total().then(function (response) {
-            self.billPay = response.data.total;
+        Bill_pay.total().then((response) => {
+            this.billPay = response.data.total;
         });
 
-        Bill_receive.total().then(function (response) {
-            self.billReceive = response.data.total;
+        Bill_receive.total().then((response) => {
+            this.billReceive = response.data.total;
         });
 
     }

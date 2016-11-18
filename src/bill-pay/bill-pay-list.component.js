@@ -39,24 +39,22 @@ window.billPayListComponent = Vue.extend({
         </tdody>
     </table>
     `,
-    data: function () {
+    data() {
         return {
             bills: []
         };
     },
-    created: function () {
-        let self = this;
-        Bill_pay.query().then(function (response) {
-            self.bills = response.data
+    created() {
+        Bill_pay.query().then((response) => {
+            this.bills = response.data
         });
     },
     methods: {
-        deleteBill: function (bill) {
-            if (confirm("Você deseja mesmo excluir?")) {
-                let self = this;
-                Bill_pay.delete({id: bill.id}).then(function (response) {
-                    self.bills.$remove(bill);
-                    self.$dispatch('change-info');
+        deleteBill(bill) {
+            if (confirm("Você deseja mesmo excluir?")) {let self = this;
+                Bill_pay.delete({id: bill.id}).then((response) => {
+                    this.bills.$remove(bill);
+                    this.$dispatch('change-info');
                 });
             }
         }
