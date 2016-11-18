@@ -30,9 +30,9 @@ window.billReceiveCreateComponent = Vue.extend({
         };
     },
     created: function () {
-        if (this.$route.name == 'bill-receive.update'){
+        if (this.$route.name == 'bill-receive.update') {
             this.formType = 'update';
-            this.getBill(this.$route.params.index);
+            this.getBill(this.$route.params.id);
         }
     },
     methods: {
@@ -52,6 +52,26 @@ window.billReceiveCreateComponent = Vue.extend({
         getBill: function (index) {
             this.bill = this.$root.$children[0].billsReceive[index];
 
+        },
+        submit: function () {
+            var self = this;
+            if (this.formType == 'insert') {
+                Bill_receive.save({}, this.bill).then(function (response) {
+                    self.$dispatch('change-info');
+                    self.$router.go({name: 'bill-receive.list'});
+                })
+            } else {
+                Bill_receive.update({id: this.bill.id}, this.bill).then(function (response) {
+                    self.$dispatch('change-info');
+                    self.$router.go({name: 'bill-receive.list'});
+                })
+            }
+        },
+        getBill: function (id) {
+            var self = this;
+            Bill_receive.get({id: id}).then(function (response) {
+                self.bill = response.data
+            });
         }
     }
 });

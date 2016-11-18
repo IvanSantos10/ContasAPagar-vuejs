@@ -25,12 +25,12 @@ window.billPayCreateComponent = Vue.extend({
             formType: 'insert',
             names: [
                 'Conta de luz',
-                'Conta de agua',
+                'Conta de água',
                 'Conta de telefone',
                 'Conta de gasolina',
-                'Conta de condominio',
-                'Conta de Cartao',
-                'Conta de Supemercado'
+                'Conta de condomínio',
+                'Conta de Cartão',
+                'Supermercado'
             ],
             bill: {
                 date_due: '',
@@ -50,12 +50,12 @@ window.billPayCreateComponent = Vue.extend({
         submit: function () {
             var self = this;
             if (this.formType == 'insert') {
-                Bill.save({}, this.bill).then(function (response) {
+                Bill_pay.save({}, this.bill).then(function (response) {
                     self.$dispatch('change-info');
                     self.$router.go({name: 'bill-pay.list'});
                 })
             } else {
-                Bill.update({id: this.bill.id}, this.bill).then(function (response) {
+                Bill_pay.update({id: this.bill.id}, this.bill).then(function (response) {
                     self.$dispatch('change-info');
                     self.$router.go({name: 'bill-pay.list'});
                 })
@@ -63,7 +63,7 @@ window.billPayCreateComponent = Vue.extend({
         },
         getBill: function (id) {
             var self = this;
-            Bill.get({id: id}).then(function (response) {
+            Bill_pay.get({id: id}).then(function (response) {
                 self.bill = response.data
             });
         }

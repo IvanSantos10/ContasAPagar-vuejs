@@ -9,31 +9,20 @@ window.dashboardComponent = Vue.extend({
     `,
     data: function () {
         return {
-            title: "Dashboard"
+            title: "Dashboard",
+            billPay: 0,
+            billReceive: 0
         }
     },
-    computed: {
-        billPay: function () {
-            var bills = this.$root.$children[0].billsPay,
-                valueBill = 0;
+    created: function () {
+        var self = this;
+        Bill_pay.total().then(function (response) {
+            self.billPay = response.data.total;
+        });
 
-            for(var i in bills){
-                if(!bills[i].done){
-                    valueBill += bills[i].value;
-                }
-            }
-            return valueBill;
-        },
-        billReceive: function () {
-            var bills = this.$root.$children[0].billsReceive,
-                valueBill = 0;
+        Bill_receive.total().then(function (response) {
+            self.billReceive = response.data.total;
+        });
 
-            for(var i in bills){
-                if(!bills[i].done){
-                    valueBill += bills[i].value;
-                }
-            }
-            return valueBill;
-        }
     }
 });
