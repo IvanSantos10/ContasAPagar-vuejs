@@ -1,9 +1,6 @@
 {
-<<<<<<< HEAD
   "name": "Contas_pagar_receber",
-=======
   "name": "Contas_pagar",
->>>>>>> 65c585260811b3dc33b99ac1c2145c0458005657
   "version": "0.0.1",
   "description": "Api de Contas a pagar e receber com VueJs",
   "main": "index.js",
@@ -14,10 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "vue": "^1.0.26",
-<<<<<<< HEAD
     "vue-resource": "^1.0.3",
-=======
->>>>>>> 65c585260811b3dc33b99ac1c2145c0458005657
     "vue-router": "^0.7.13"
   }
 }
