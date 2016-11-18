@@ -25,7 +25,7 @@ window.billPayListComponent = Vue.extend({
         <tdody>
             <tr v-for="(index,o) in bills">
                 <td>{{ index + 1}}</td>
-                <td>{{ o.date_due }}</td>
+                <td>{{ o.date_due | dateFormat}}</td>
                 <td>{{ o.name }}</td>
                 <td>{{ o.value | numberFormat }}</td>
                 <td class="minha-class" :class="{ 'pago': o.done, 'nao-pago': !o.done}">
@@ -51,7 +51,8 @@ window.billPayListComponent = Vue.extend({
     },
     methods: {
         deleteBill(bill) {
-            if (confirm("Você deseja mesmo excluir?")) {let self = this;
+            if (confirm("Você deseja mesmo excluir?")) {
+                let self = this;
                 Bill_pay.delete({id: bill.id}).then((response) => {
                     this.bills.$remove(bill);
                     this.$dispatch('change-info');
