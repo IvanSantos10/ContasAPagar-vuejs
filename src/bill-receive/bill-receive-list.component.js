@@ -25,11 +25,11 @@ window.billReceiveListComponent = Vue.extend({
         <tdody>
             <tr v-for="(index,o) in bills">
                 <td>{{ index + 1}}</td>
-                <td>{{ o.date_due }}</td>
+                <td>{{ o.date_due | dateFormat }}</td>
                 <td>{{ o.name }}</td>
                 <td>{{ o.value | numberFormat }}</td>
                 <td class="minha-class" :class="{ 'pago': o.done, 'nao-pago': !o.done}">
-                    {{ o.done | doneLabelReceive }}
+                    {{ o.done | doneLabel }}
                 </td>
                 <td>
                     <a v-link="{ name: 'bill-receive.update', params: { id: o.id }}">Editar</a>

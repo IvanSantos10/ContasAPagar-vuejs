@@ -75,6 +75,5 @@ window.billPayCreateComponent = Vue.extend({
             }
             return dateDueObject.toISOString().split('T')[0];
         }
-
     }
 });

@@ -1,6 +1,4 @@
-Vue.filter('doneLabelPay', (value) => value == 0 ? "Não paga" : "Paga");
-
-Vue.filter('doneLabelReceive', (value) => value == 0 ? "Não paga" : "Paga");
+Vue.filter('doneLabel', (value) => value == 0 ? "Não paga" : "Paga");
 
 Vue.filter('statusGeneralPay', (value) => {
     if (value === false) {

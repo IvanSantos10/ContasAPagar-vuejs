@@ -29,7 +29,7 @@ window.billPayListComponent = Vue.extend({
                 <td>{{ o.name }}</td>
                 <td>{{ o.value | numberFormat }}</td>
                 <td class="minha-class" :class="{ 'pago': o.done, 'nao-pago': !o.done}">
-                    {{ o.done | doneLabelPay }}
+                    {{ o.done | doneLabel }}
                 </td>
                 <td>
                     <a v-link="{ name: 'bill-pay.update', params: { id: o.id}}">Editar</a>
