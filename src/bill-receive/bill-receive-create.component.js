@@ -8,7 +8,7 @@ window.billReceiveCreateComponent = Vue.extend({
         <input type="text" v-model="bill.name">
         <br><br>
         <label>Valor:</label>
-        <input type="text" v-model="bill.value">
+        <input type="text" v-model="bill.value | numberFormat">
         <br><br>
         <label>Paga?:</label>
         <input type="checkbox" v-model="bill.done">
