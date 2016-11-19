@@ -37,23 +37,6 @@ window.billReceiveCreateComponent = Vue.extend({
     },
     methods: {
         submit: function () {
-            if (this.formType == 'insert') {
-                bills: this.$root.$children[0].billsReceive.push(this.bill);
-            }
-
-            this.bill = {
-                date_due: '',
-                name: '',
-                value: 0,
-                done: false
-            };
-            this.$router.go({name: 'bill-receive.list'});
-        },
-        getBill: function (index) {
-            this.bill = this.$root.$children[0].billsReceive[index];
-
-        },
-        submit: function () {
             var self = this;
             if (this.formType == 'insert') {
                 Bill_receive.save({}, this.bill).then(function (response) {
