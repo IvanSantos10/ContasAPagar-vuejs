@@ -27,7 +27,7 @@ var mainComponent = Vue.extend({
     }
 }); */
 router.map({
-    '/': {
+    '/dashboard': {
         name: '/dashboard',
         component: dashboardComponent
     },
