@@ -44,7 +44,7 @@ window.billPayCreateComponent = Vue.extend({
     },
     methods: {
         submit() {
-            let data = this.bill.toJSON(); ///Vue.util.extend(this.bill, {date_due: this.getDateDue(this.bill.date_due)});
+            let data = this.bill.toJSON();
             if (this.formType == 'insert') {
                 Bill_pay.save({}, data).then((response) => {
                     this.$dispatch('change-info');
