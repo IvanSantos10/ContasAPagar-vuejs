@@ -16,7 +16,7 @@ window.billPayCreateComponent = Vue.extend({
         <br><br>
         <label>Nome:</label>
         <select v-model="bill.name ">
-            <option v-for="o in names" :value="o" >{{ o | stringFormat}}</option>
+            <option v-for="o in names" :value="o" >{{ o | stringFormat }}</option>
         </select>
         <br><br>
         <label>Valor:</label>
@@ -33,7 +33,7 @@ window.billPayCreateComponent = Vue.extend({
         return {
             formType: 'insert',
             names: names,
-            bill: new Bill()
+            bill: new BillPay()
         };
     },
     created() {
@@ -44,7 +44,7 @@ window.billPayCreateComponent = Vue.extend({
     },
     methods: {
         submit() {
-            let data = this.bill;
+            let data = this.bill.toJSON();
             if (this.formType == 'insert') {
                 Bill_pay.save({}, data).then((response) => {
                     this.$dispatch('change-info');
@@ -59,15 +59,8 @@ window.billPayCreateComponent = Vue.extend({
         },
         getBill(id) {
             Bill_pay.get({id: id}).then((response) => {
-                this.bill = new Bill(response.data);
+                this.bill = new BillPay(response.data);
             });
-        },
-        getDateDue(date_due) {
-            let dateDueObject = date_due;
-            if (!(date_due instanceof Date)) {
-                dateDueObject = new Date(date_due.split('/').reverse().join('-') + "T03:00:00");
-            }
-            return dateDueObject.toISOString().split('T')[0];
         }
     }
 });

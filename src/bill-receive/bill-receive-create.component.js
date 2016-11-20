@@ -1,5 +1,5 @@
 window.billReceiveCreateComponent = Vue.extend({
-    template: `
+    template: `   
     <form name="form" @submit.prevent="submit">
         <label>Vencimento:</label>
         <input type="text" v-model="bill.date_due | dateFormat 'pt-BR'">
@@ -8,7 +8,7 @@ window.billReceiveCreateComponent = Vue.extend({
         <input type="text" v-model="bill.name | stringFormat ">
         <br><br>
         <label>Valor:</label>
-        <input type="text" v-model="bill.value | numberFormat 'pt-BR'">
+        <input type="text" v-model="bill.value | numberFormat 'pt-BR' ">
         <br><br>
         <label>Paga?:</label>
         <input type="checkbox" v-model="bill.done">
@@ -17,11 +17,10 @@ window.billReceiveCreateComponent = Vue.extend({
         <br><br>
     </form>
     `,
-    props: ['bill'],
     data() {
         return {
             formType: 'insert',
-            bill: new Bill()
+            bill: new BillPay()
         };
     },
     created() {
@@ -32,7 +31,7 @@ window.billReceiveCreateComponent = Vue.extend({
     },
     methods: {
         submit() {
-            let data = this.bill; //Vue.util.extend(this.bill, {date_due: this.getDateDue(this.bill.date_due)});
+            let data = this.bill.toJSON();
             if (this.formType == 'insert') {
                 Bill_receive.save({}, data).then((response) => {
                     this.$dispatch('change-info');
@@ -47,7 +46,7 @@ window.billReceiveCreateComponent = Vue.extend({
         },
         getBill(id) {
             Bill_receive.get({id: id}).then((response) => {
-                this.bill = new Bill(response.data)
+                this.bill = new BillPay(response.data);
             });
         },
         getDateDue(date_due) {

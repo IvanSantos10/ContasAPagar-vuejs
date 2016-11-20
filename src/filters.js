@@ -79,12 +79,12 @@ Vue.filter('dateFormat', {
 Vue.filter('stringFormat', {
     read(value){
         if (value && typeof value !== undefined) {
-            return value.toUpperCase(); //uppercase()
+            return value.toUpperCase();
         }
     },
     write(value){
         if (value && typeof value !== undefined) {
-            return value.toLowerCase(); //toLowerCase()
+            return value.toLowerCase();
         }
     }
 });

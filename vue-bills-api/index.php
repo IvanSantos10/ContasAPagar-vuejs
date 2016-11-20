@@ -71,7 +71,6 @@ $app->post('api/bills-pay', function (Request $request) use ($app) {
     $data = $request->request->all();
     $data['id'] = rand(100,100000);
     $bills[] = $data;
-    //var_dump($bills); exit;
     writeBills($bills, 'billsPay');
     return $app->json($data);
 });
