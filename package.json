@@ -1,4 +1,5 @@
 {
+  "name": "Contas_pagar_receber",
   "name": "Contas_pagar",
   "version": "0.0.1",
   "description": "Api de Contas a pagar e receber com VueJs",
