@@ -23,13 +23,13 @@ Vue.filter('statusGeneralReceive', (value) => {
 });
 
 Vue.filter('numberFormat', {
-    read(value){
+    read(value, ling){
         let number = 0;
         if (value && typeof value !== undefined) {
             let numberRegex = value.toString().match(/\d+(\.{1}\d{1,2}){0,1}/g);
             number = numberRegex ? numberRegex[0] : numberRegex;
         }
-        return new Intl.NumberFormat('pt-BR', {
+        return new Intl.NumberFormat(ling, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
             style: 'currency',
@@ -48,7 +48,7 @@ Vue.filter('numberFormat', {
 });
 
 Vue.filter('dateFormat', {
-    read(value){
+    read(value, ling){
         if (value && typeof value !== undefined) {
             if (!(value instanceof Date)) {
                 let dateRegex = value.match(/\d{4}\-\d{2}\-\d{2}/g);
@@ -59,7 +59,7 @@ Vue.filter('dateFormat', {
                     return value;
                 }
             }
-            return new Intl.DateTimeFormat('pt-BR').format(value).split(' ')[0];
+            return new Intl.DateTimeFormat(ling).format(value).split(' ')[0];
         }
         return value;
     },
@@ -73,5 +73,18 @@ Vue.filter('dateFormat', {
             }
         }
         return value;
+    }
+});
+
+Vue.filter('stringFormat', {
+    read(value){
+        if (value && typeof value !== undefined) {
+            return value.toUpperCase(); //uppercase()
+        }
+    },
+    write(value){
+        if (value && typeof value !== undefined) {
+            return value.toLowerCase(); //toLowerCase()
+        }
     }
 });

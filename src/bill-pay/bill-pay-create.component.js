@@ -12,15 +12,15 @@ window.billPayCreateComponent = Vue.extend({
     template: `
     <form name="form" @submit.prevent="submit">
         <label>Vencimento:</label>
-        <input type="text" v-model="bill.date_due | dateFormat">
+        <input type="text" v-model="bill.date_due | dateFormat 'pt-BR'">
         <br><br>
         <label>Nome:</label>
-        <select v-model="bill.name">
-            <option v-for="o in names" :value="o" >{{ o }}</option>
+        <select v-model="bill.name ">
+            <option v-for="o in names" :value="o" >{{ o | stringFormat}}</option>
         </select>
         <br><br>
         <label>Valor:</label>
-        <input type="text" v-model="bill.value | numberFormat">
+        <input type="text" v-model="bill.value | numberFormat 'pt-BR' ">
         <br><br>
         <label>Paga?:</label>
         <input type="checkbox" v-model="bill.done">
@@ -29,12 +29,11 @@ window.billPayCreateComponent = Vue.extend({
         <br><br>
     </form>
     `,
-    props: ['bill'],
     data() {
         return {
             formType: 'insert',
             names: names,
-            bill: new BillPay()
+            bill: new Bill()
         };
     },
     created() {
@@ -45,7 +44,7 @@ window.billPayCreateComponent = Vue.extend({
     },
     methods: {
         submit() {
-            let data = this.bill.toJSON();   //Vue.util.extend(this.bill, {date_due: this.getDateDue(this.bill.date_due)});
+            let data = this.bill.toJSON(); ///Vue.util.extend(this.bill, {date_due: this.getDateDue(this.bill.date_due)});
             if (this.formType == 'insert') {
                 Bill_pay.save({}, data).then((response) => {
                     this.$dispatch('change-info');
@@ -60,7 +59,7 @@ window.billPayCreateComponent = Vue.extend({
         },
         getBill(id) {
             Bill_pay.get({id: id}).then((response) => {
-                this.bill = new.BillPay(response.data);
+                this.bill = new Bill(response.data);
             });
         },
         getDateDue(date_due) {

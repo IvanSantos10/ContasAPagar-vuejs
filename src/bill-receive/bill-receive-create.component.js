@@ -2,13 +2,13 @@ window.billReceiveCreateComponent = Vue.extend({
     template: `
     <form name="form" @submit.prevent="submit">
         <label>Vencimento:</label>
-        <input type="text" v-model="bill.date_due | dateFormat">
+        <input type="text" v-model="bill.date_due | dateFormat 'pt-BR'">
         <br><br>
         <label>Nome:</label>
-        <input type="text" v-model="bill.name">
+        <input type="text" v-model="bill.name | stringFormat ">
         <br><br>
         <label>Valor:</label>
-        <input type="text" v-model="bill.value | numberFormat">
+        <input type="text" v-model="bill.value | numberFormat 'pt-BR'">
         <br><br>
         <label>Paga?:</label>
         <input type="checkbox" v-model="bill.done">
@@ -21,12 +21,7 @@ window.billReceiveCreateComponent = Vue.extend({
     data() {
         return {
             formType: 'insert',
-            bill: {
-                date_due: '',
-                name: '',
-                value: 0,
-                done: false
-            }
+            bill: new Bill()
         };
     },
     created() {
@@ -37,24 +32,7 @@ window.billReceiveCreateComponent = Vue.extend({
     },
     methods: {
         submit() {
-            if (this.formType == 'insert') {
-                bills: this.$root.$children[0].billsReceive.push(this.bill);
-            }
-
-            this.bill = {
-                date_due: '',
-                name: '',
-                value: 0,
-                done: false
-            };
-            this.$router.go({name: 'bill-receive.list'});
-        },
-        getBill(index) {
-            this.bill = this.$root.$children[0].billsReceive[index];
-
-        },
-        submit() {
-            let data = Vue.util.extend(this.bill, {date_due: this.getDateDue(this.bill.date_due)});
+            let data = this.bill.toJSON(); //Vue.util.extend(this.bill, {date_due: this.getDateDue(this.bill.date_due)});
             if (this.formType == 'insert') {
                 Bill_receive.save({}, data).then((response) => {
                     this.$dispatch('change-info');
@@ -69,7 +47,7 @@ window.billReceiveCreateComponent = Vue.extend({
         },
         getBill(id) {
             Bill_receive.get({id: id}).then((response) => {
-                this.bill = response.data
+                this.bill = new Bill(response.data)
             });
         },
         getDateDue(date_due) {

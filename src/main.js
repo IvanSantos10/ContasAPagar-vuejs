@@ -1,7 +1,7 @@
 let router = new VueRouter();
 
 router.map({
-    '/': {
+    '/dashboard': {
         name: '/dashboard',
         component: dashboardComponent
     },
@@ -53,7 +53,7 @@ router.start({
 
 
 router.redirect({
-    '*': '/dashboard'
+    '*': '/'
 });
 
 

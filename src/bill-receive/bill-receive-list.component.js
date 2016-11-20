@@ -26,7 +26,7 @@ window.billReceiveListComponent = Vue.extend({
             <tr v-for="(index,o) in bills">
                 <td>{{ index + 1}}</td>
                 <td>{{ o.date_due | dateFormat }}</td>
-                <td>{{ o.name }}</td>
+                <td>{{ o.name | | stringFormat }}</td>
                 <td>{{ o.value | numberFormat }}</td>
                 <td class="minha-class" :class="{ 'pago': o.done, 'nao-pago': !o.done}">
                     {{ o.done | doneLabel }}

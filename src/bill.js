@@ -1,18 +1,18 @@
-class BillPay {
-    constructor(data) {
+class Bill{
+    constructor(data = {}){
         this.date_due = '';
         this.name = '';
-        this.value = 0;
+        this.value = '';
         this.done = false;
-        Object.assign(this, data);
+        Object.assign(this,data);
     }
 
     toJSON(){
         return {
-            date_due: this.date_due.toISOString().substring(0,10),
+            date_due: this.date_due, ///.toISOString().substring(0,10),
             name: this.name,
             value: this.value,
-            done: this.done
+            done: this.done,
         }
     }
 }
