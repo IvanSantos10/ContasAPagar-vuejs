@@ -32,7 +32,7 @@ window.billReceiveCreateComponent = Vue.extend({
     },
     methods: {
         submit() {
-            let data = this.bill.toJSON(); //Vue.util.extend(this.bill, {date_due: this.getDateDue(this.bill.date_due)});
+            let data = this.bill; //Vue.util.extend(this.bill, {date_due: this.getDateDue(this.bill.date_due)});
             if (this.formType == 'insert') {
                 Bill_receive.save({}, data).then((response) => {
                     this.$dispatch('change-info');

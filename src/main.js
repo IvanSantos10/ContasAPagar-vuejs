@@ -53,7 +53,7 @@ router.start({
 
 
 router.redirect({
-    '*': '/'
+    '*': '/dashboard'
 });
 
 
