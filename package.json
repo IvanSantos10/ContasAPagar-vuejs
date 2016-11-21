@@ -1,5 +1,4 @@
 {
-  "name": "Contas_pagar_receber",
   "name": "Contas_pagar",
   "version": "0.0.1",
   "description": "Api de Contas a pagar e receber com VueJs",
@@ -11,6 +10,7 @@
   "author": "Ivan Santos",
   "license": "ISC",
   "dependencies": {
+    "materialize-css": "^0.97.8",
     "vue": "^1.0.26",
     "vue-resource": "^1.0.3",
     "vue-router": "^0.7.13"
