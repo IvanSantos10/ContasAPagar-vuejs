@@ -19,7 +19,7 @@ window.billPayComponent = Vue.extend({
             <h1>{{ title }}</h1>
             <h3 :class="{'gray': status === false , 'green': status == 0, 'red': status > 0}">{{ status | statusGeneralPay}}</h3>
             <div class="row">
-                <div class="col s5 offset-s7 z-depth-2">
+                <div class="col s5 offset-s7 z-depth-2 blue darken-4">
                     <h3>{{ total | numberFormat }}</h3>
                 </div>
             </div>
