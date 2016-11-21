@@ -10,24 +10,28 @@ const names = [
 
 window.billPayCreateComponent = Vue.extend({
     template: `
-    <form name="form" @submit.prevent="submit">
-        <label>Vencimento:</label>
-        <input type="text" v-model="bill.date_due | dateFormat 'pt-BR'">
-        <br><br>
-        <label>Nome:</label>
-        <select v-model="bill.name ">
-            <option v-for="o in names" :value="o" >{{ o | stringFormat }}</option>
-        </select>
-        <br><br>
-        <label>Valor:</label>
-        <input type="text" v-model="bill.value | numberFormat 'pt-BR' ">
-        <br><br>
-        <label>Paga?:</label>
-        <input type="checkbox" v-model="bill.done">
-        <br><br>
-        <input type="submit" value="Enviar">
-        <br><br>
-    </form>
+    <div class="container">
+        <div class="row">
+            <form name="form" @submit.prevent="submit">
+                <label>Vencimento:</label>
+                <input type="text" v-model="bill.date_due | dateFormat 'pt-BR'">
+                <br><br>
+                <label>Nome:</label>
+                <select v-model="bill.name ">
+                    <option v-for="o in names" :value="o" >{{ o | stringFormat }}</option>
+                </select>
+                <br><br>
+                <label>Valor:</label>
+                <input type="text" v-model="bill.value | numberFormat 'pt-BR' ">
+                <br><br>
+                <label>Paga?:</label>
+                <input type="checkbox" v-model="bill.done">
+                <br><br>
+                <input type="submit" value="Enviar">
+                <br><br>
+            </form>
+        </div>
+    </div>
     `,
     data() {
         return {

@@ -52,8 +52,8 @@ window.billComponent = Vue.extend({
                 },
                 {
                     id: 'bill-receive', items: [
-                    {id: 0, name: 'Listar contas', routeName: 'bill-pay.list'},
-                    {id: 1, name: 'Criar contas', routeName: 'bill-pay.create'}
+                    {id: 0, name: 'Listar contas', routeName: 'bill-receive.list'},
+                    {id: 1, name: 'Criar contas', routeName: 'bill-receive.create'}
                 ]
                 }
             ]
