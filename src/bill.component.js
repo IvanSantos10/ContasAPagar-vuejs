@@ -1,4 +1,7 @@
 window.billComponent = Vue.extend({
+    components: {
+        'modal': window.modalComponent
+    },
     template: `
     <ul :id="o.id" class="dropdown-content" v-for="o in menusDropdown">
         <li v-for="item in o.items">
@@ -27,7 +30,8 @@ window.billComponent = Vue.extend({
                 </ul>
             </div>  
         </nav>  
-    </div>   
+    </div>  
+    <modal></modal>
     <router-view></router-view>
     `,
     created(){
@@ -39,7 +43,7 @@ window.billComponent = Vue.extend({
     data() {
         return {
             menus: [
-                /*{name: 'Dashboard', routeName: '/dashboard'},*/
+                {name: 'Dashboard', routeName: '/dashboard'},
                 {name: 'Contas a pagar', routeName: 'bill-pay.list', bropdownId: 'bill-pay'},
                 {name: 'Contas a receber', routeName: 'bill-receive.list', bropdownId: 'bill-receive'}
             ],

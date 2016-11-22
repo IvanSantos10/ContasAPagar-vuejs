@@ -1,4 +1,7 @@
 window.billPayListComponent = Vue.extend({
+    components: {
+        'modal': modalComponent
+    },
     template: `
     <style>
         .pago{
@@ -13,7 +16,7 @@ window.billPayListComponent = Vue.extend({
     </style>
     <div class="container">
         <div class="row">
-            <table class="bordered striped highlight centerd responsive-table z-depth-5">
+            <table class="bordered striped highlight centered responsive-table z-depth-5">
                 <thead>
                 <tr>
                     <th>#</th>
@@ -35,33 +38,56 @@ window.billPayListComponent = Vue.extend({
                         </td>
                         <td>
                             <a v-link="{ name: 'bill-pay.update', params: { id: o.id}}">Editar</a>
-                            <a href="#" @click.prevent="deleteBill(o)">Excluir</a>
+                            <a href="#" @click.prevent="openModalDelete(o)">Excluir</a>
                         </td>
                     </tr>
                 </tdody>
             </table>
         </div>
     </div>
+    <modal :modal="modal">
+        <div slot="content">
+            <h4>Mensagem de confimação</h4>
+            <p><strong>Deseja excluir esta conta?</strong></p>
+            <div class="divider"></div>
+            <p>Nome: <strong>{{billToDelete.name | stringFormat}}</strong></p>
+            <p>Valor: <strong>{{billToDelete.value | numberFormat 'pt-BR' }}</strong></p>
+            <p>Data de vencimento: <strong>{{billToDelete.date_due | dateFormat 'pt-BR'}}</strong></p>
+            <div class="divider"></div>
+        </div>
+        <div slot="footer">
+            <button class="btn btn-flat waves-effect green lighten-2 modal-close modal-action" @click="deleteBill()">Ok</button>
+            <button class="btn btn-flat waves-effect waves-red modal-close modal-action">Cancelar</button>
+        </div>
+    </modal>
     `,
     data() {
         return {
-            bills: []
+            bills: [],
+            billToDelete: null,
+            modal: {
+                id: 'modal-delete'
+            }
         };
     },
     created() {
         Bill_pay.query().then((response) => {
-            this.bills = response.data
+            this.bills = response.data;
         });
     },
     methods: {
-        deleteBill(bill) {
-            if (confirm("Você deseja mesmo excluir?")) {
-                let self = this;
-                Bill_pay.delete({id: bill.id}).then((response) => {
-                    this.bills.$remove(bill);
-                    this.$dispatch('change-info');
-                });
-            }
+        deleteBill() {
+            Bill_pay.delete({id: this.billToDelete.id}).then((response) => {
+                this.bills.$remove(this.billToDelete);
+                this.billToDelete = null;
+                Materialize.toast('Conta excluída com sucesso!', 4000);
+                this.$dispatch('change-info');
+            });
+
+        },
+        openModalDelete(bill) {
+            this.billToDelete = bill;
+            $('#modal-delete').openModal();
         }
     }
 });
