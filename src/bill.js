@@ -1,26 +1,19 @@
-class BillPay{
-    constructor(data = {}){
+class BillPay {
+    constructor(data = {}) {
         this.date_due = '';
         this.name = '';
         this.value = '';
         this.done = false;
-        Object.assign(this,data);
+        Object.assign(this, data);
     }
 
-    toJSON(){
+    toJSON() {
+        let date_due = (typeof this.date_due === 'string' && this.date_due.length == 10) ? this.date_due : this.date_due.toISOString().substring(0, 10);
         return {
-            date_due: this.getDateDue(this.date_due),
+            date_due: date_due,
             name: this.name,
             value: this.value,
             done: this.done,
         }
-    }
-
-    getDateDue(date_due) {
-        let dateDueObject = date_due;
-        if (!(date_due instanceof Date)) {
-            dateDueObject = new Date(date_due.split('/').reverse().join('-') + "T03:00:00");
-        }
-        return dateDueObject.toISOString().split('T')[0];
     }
 }
