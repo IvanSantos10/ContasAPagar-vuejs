@@ -13,22 +13,30 @@ window.billPayCreateComponent = Vue.extend({
     <div class="container">
         <div class="row">
             <form name="form" @submit.prevent="submit">
-                <label>Vencimento:</label>
-                <input type="text" v-model="bill.date_due | dateFormat 'pt-BR'">
-                <br><br>
-                <label>Nome:</label>
-                <select v-model="bill.name ">
-                    <option v-for="o in names" :value="o" >{{ o | stringFormat }}</option>
-                </select>
-                <br><br>
-                <label>Valor:</label>
-                <input type="text" v-model="bill.value | numberFormat 'pt-BR' ">
-                <br><br>
-                <label>Paga?:</label>
-                <input type="checkbox" v-model="bill.done">
-                <br><br>
-                <input type="submit" value="Enviar">
-                <br><br>
+                <div class="row">
+                    <div class="input-field col s4">
+                        <label>Vencimento</label>
+                        <input type="text" v-model="bill.date_due | dateFormat 'pt-BR'" placeholder="Informe a data">
+                    </div>
+                    <div class="input-field col s4">
+                        <label>Valor:</label>
+                        <input type="text" v-model="bill.value | numberFormat 'pt-BR' ">
+                    </div>  
+                </div>
+                <div class="row">
+                    <label>Nome:</label>
+                    <select v-model="bill.name " id="name" class="browser-default">
+                        <option value="" disabled selected>Escolha um nome</option>
+                        <option v-for="o in names" :value="o" >{{ o | stringFormat }}</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <input type="checkbox" v-model="bill.done" id="pago">
+                    <label for="pago">Paga?:</label>
+                </div>                
+                <div class="row">
+                    <input type="submit" value="Enviar">
+                </div>                
             </form>
         </div>
     </div>
@@ -45,6 +53,10 @@ window.billPayCreateComponent = Vue.extend({
             this.formType = 'update';
             this.getBill(this.$route.params.id);
         }
+
+        $(function () {
+           $('#name').material_select();
+        });
     },
     methods: {
         submit() {
