@@ -5,7 +5,7 @@ window.billReceiveComponent = Vue.extend({
             <h3>{{ title }}</h3>
             <div class="row">
                 <div class="col s7">
-                    <div class="card z-depth-2" :class="{'gray': status === false , 'green': status == 0, 'red': status > 0}">
+                    <div class="card z-depth-2" :class="{'gray': status === false , 'red': status == 0, 'green': status > 0}">
                         <div class="card-content white-text">
                             <p class="card-title">
                                 <i class="material-icons">account_balance</i>

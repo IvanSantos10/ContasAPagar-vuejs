@@ -8,7 +8,10 @@
 @import "node_modules/materialize-css/sass/materialize";
 
 //Minhas classes
-
 .my-custom-green{
   @extend .green, .darken-1, .purple-text, .text-lighten-2
+}
+
+.modal{
+  width: 45%;
 }

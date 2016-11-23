@@ -1,14 +1,28 @@
 window.dashboardComponent = Vue.extend({
     template: `
-    <div class="container">
-        <div class="row">            
-            <h1>{{ title }}</h1>
-            <h2>Valor a pagar</h2>
-            <p> {{ billPay | numberFormat 'pt-BR'}}</p>
-            <h2>Valor a receber</h2>
-            <p> {{ billReceive | numberFormat 'pt-BR'}}</p>
-        </div>
-    </div>           
+    <div class="section">
+        <div class="container">          
+            <h3>{{ title }}</h3>
+            <div class="row">
+                <div class="col s6">
+                    <div class="card z-depth-2 red" >
+                        <div class="card-content">
+                             <h5>Valor a pagar</h5>
+                             <p> {{ billPay | numberFormat 'pt-BR'}}</p>                            
+                        </div>
+                    </div>  
+                </div>  
+                <div class="col s6">
+                    <div class="card z-depth-2 green" >
+                        <div class="card-content">
+                            <h5>Valor a receber</h5>
+                            <p> {{ billReceive | numberFormat 'pt-BR'}}</p>                       
+                        </div>
+                    </div>  
+                </div>
+            </div>
+        </div> 
+    </div>          
     <router-view></router-view>
     `,
     data() {
